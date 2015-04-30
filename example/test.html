@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VOLT.JS</title>	
+		<script src="../volt.js"></script>
+	</head>
+	<body>
+		<div class="to-black">black background (addClass)</div>
+		<div class="to-black">black background (addClass)</div>
+		<div class="to-black">black background (addClass)</div>
+		<hr>
+		<div class="blackened">white background (remClass)</div>
+		<div class="blackened">white background (remClass)</div>
+		<div class="blackened">white background (remClass)</div>
+		<hr>
+		<div class="to-green">green color (style)</div>
+		<div class="to-green">green color (style)</div>
+		<div class="to-green">green color (style)</div>
+		<hr>
+		<div class="to-attr">violet color style attribute (setAttr)</div>
+		<div class="to-attr">violet color style attribute (setAttr)</div>
+		<div class="to-attr">violet color style attribute (setAttr)</div>
+		<hr>
+		<div class="to-hide1">hidden</div>
+		<div id="to-hide2">hidden</div>
+		<div class="to-show" style="display:none;">showed</div>
+		<div class="to-show" style="display:none;">showed</div>
+		<hr>
+		<div class="attrib" data-test="data-test value">true - false - data-test value</div>
+		
+		<style>
+			.black{background-color:black; color:white;}
+			.blackened{background-color:black; color:white;}
+		</style>
+		
+		<script>
+			(function(){
+			
+				/**/
+				V('.to-black').addClass('black');
+				V('.blackened').remClass('blackened');
+				V('.to-green').style('color', 'green');
+				V('.to-attr').setAttr('style', 'color:violet;');
+				V('.to-hide1, #to-hide2').hide();
+				V('.to-show').show();
+				alert(  V('.attrib').hasAttr('data-test') + ' - ' + 
+						V('.attrib').hasAttr('data-error') + ' - ' + 
+						V('.attrib').getAttr('data-test')   );
+				
+			})();
+		</script>
+				
+	</body>
+</html>

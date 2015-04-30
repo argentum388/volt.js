@@ -287,15 +287,24 @@
 		
 	};	
 	
+	
 	__volt__.getAttr = function(attrName) {
 		
 		return this[0].getAttribute(attrName);
 		
 	};
 	
+	
 	__volt__.setAttr = function(attrName, attrVal) {
 		
-		return this[0].setAttribute(attrName, attrVal);
+		var i = this.length;
+		while(i) {
+			
+			i -= 1;
+			this[i].setAttribute(attrName, attrVal);
+				
+		}
+		return this;
 		
 	};
 	
