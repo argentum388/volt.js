@@ -7,7 +7,6 @@
 		Signature List:
 		
 		V(collection).on(handler, type)
-		V.uni(e)
 		
 		V(collection).hasClass(className) 
 		V(collection).addClass(className) 
@@ -19,6 +18,14 @@
 
 		V(collection).hide()
 		V(collection).show()
+		V(collection).style(styleName, styleVal)
+		
+		V(collection).html()
+		V(collection).val()
+		V(collection).append(elem)
+		
+		V.create(tag)
+		V.uni(event)
 		
 	
 */
@@ -65,7 +72,7 @@
 					i -= 1;
 					if( collection[i].nodeType !== 1 ) {
 						
-						throw new Error('Incorrect HTMLCollection object!');
+						throw new Error('Need HTMLCollection object!');
 						
 					}
 					
@@ -79,13 +86,13 @@
 			
 				if( collection.nodeType === 1 ) {
 					
-					this[0] = collname;
+					this[0] = collection;
 					this.length = 1;
 					return this;
 					
 				} else {
 					
-					throw new Error('Not DOM object!');
+					throw new Error('Need DOM object!');
 				
 				}
 
@@ -109,14 +116,24 @@
 	
 	__volt__.item = function( num ) {
 		
-		// проверка типа
+		// TODO check type
 		this[0] = this[num];
 		this.length = 1;
 		return this;
 		
 	};
 	
-
+	
+	
+	/***   TRIM    ***/ 
+	
+	__volt__.trim = String.prototype.trim || function(str) {
+			
+		return str.replace(/^\s+|\s+$/gm,'');
+		
+	};
+	
+	
 	
 	/***    EVENTS    ***/ 
 	
@@ -168,16 +185,7 @@
 			
 		};
 	}		
-	
-	
-	/***   TRIM    ***/ 
-	
-	__volt__.trim = String.prototype.trim || function(str) {
-			
-		return str.replace(/^\s+|\s+$/gm,'');
-		
-	};
-	
+
 	
 	
 	/***    CLASS ACTIONS    ***/ 
@@ -185,14 +193,14 @@
 	if ("classList" in document.createElement("fake")) {	
 		
 		
-		// проверка только одного dom-элемента
+		// single V-element
 		__volt__.hasClass = function(className) {
 			
 			return this[0].classList.contains(className);
 			
 		};	
 		
-		// работа над коллекцией
+		// V-collection
 		__volt__.addClass = function( className ) {
 			
 			var i = this.length;
@@ -209,7 +217,7 @@
 		};
 		
 		
-		__volt__.prototype.remClass = function(className) {
+		__volt__.remClass = function(className) {
 			
 			var i = this.length;
 			
@@ -227,14 +235,14 @@
 		
 	} else {
 		
-		// проверка только одного dom-элемента
+		//  single DOM element
 		__volt__.hasClass = function( className ) {
 			
 			return ~(this[0].getAttribute('class').indexOf(className));
 			
 		};
 		
-		// работа с коллекцией
+		// V-collection
 		__volt__.addClass = function( className ) {
 			
 			var i = this.length;
@@ -251,7 +259,7 @@
 		};
 
 
-		// работа с коллекцией
+		// V-collection
 		__volt__.remClass = function( className ) {
 			
 			var i = this.length;
@@ -308,6 +316,8 @@
 		
 	};
 	
+	
+	
 	__volt__.show = function() {
 		
 		var i = this.length;
@@ -320,7 +330,78 @@
 	
 	};
 	
-	Volt.uni = function(e) { // статический метод
+	
+	
+	__volt__.style = function(styleName, styleVal) {
+		
+		var i = this.length;
+		while(i) {
+			
+			i -= 1;
+			this[i].style[styleName] = styleVal;
+			
+		}
+	
+	};
+	
+	
+	__volt__.html = function(html) {
+		
+		var i = this.length;
+		while(i) {
+			
+			i -= 1;
+			this[i].innerHTML = html;
+			
+		}
+	
+	};
+	
+	
+	__volt__.val = function(val) {
+		
+		if(val) {
+			
+			var i = this.length;
+			while(i) {
+				
+				i -= 1;
+				this[i].value = val;
+				
+			}
+			
+		} else {
+			
+			return this[0].value;
+			
+		}
+
+	};
+	
+	__volt__.append = function(elem) {
+		
+		var i = this.length;
+		while(i) {
+			
+			i -= 1;
+			this[i].appendChild(elem);
+			
+		}
+	
+	};
+	
+	
+	/*** STATIC METHODS ***/
+	
+	
+	Volt.create = function(tag) {
+		
+		return document.createElement(tag);
+	
+	};
+	
+	
+	Volt.uni = function(e) {
 		
 		e = e || window.event;
 		
@@ -347,21 +428,6 @@
 	
 })(this,document);
 
-
-( function( win, doc, Volt ) {
-	
-	if ( Volt ) {
-		
-		return;
-
-	} else {
-		
-		throw new Error('Can\'t load Volt Library'); 
-		alert('Извините, что-то пошло не так :)))');
-		
-	}
-
-})( this, document, this.V );
 
 
 
