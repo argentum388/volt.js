@@ -7,15 +7,15 @@
 */
 
 
-;(function( win,doc ) {
+;(function( global,doc ) {
 	
 	"use strict";
 	
 	var Volt = function( collection, elem ) {
 		
-		var elem = elem || doc,
-				domlist,
-				i;
+		elem = elem || doc;
+		var domlist,
+			i;
 		
 		if ( !(this instanceof Volt) ) {
 			
@@ -389,7 +389,7 @@
 	
 	Volt.uni = function(e) {
 		
-		e = e || window.event;
+		e = e || global.event;
 		
 		if(!e.target) {
 			
@@ -414,7 +414,7 @@
 	
 	/***   EXPORT    ***/ 
 	
-	win.V = win.v = win.Volt = win.volt = Volt;
+	global.V = global.v = global.Volt = global.volt = Volt;
 	
 	
 	
